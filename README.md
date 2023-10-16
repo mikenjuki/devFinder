@@ -1,6 +1,5 @@
 # GitHub user search app via Github API
 
-
 ## Table of contents
 
 - [Overview](#overview)
@@ -10,7 +9,6 @@
 - [My process](#my-process)
   - [Built with](#built-with)
 - [Author](#author)
-
 
 ## Overview
 
@@ -29,7 +27,6 @@ Users should be able to:
 
 ![](./screenshot.jpg)
 
-
 ### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
@@ -38,12 +35,10 @@ Users should be able to:
 ## My process
 
 ### Built with
-- [Next.js](https://nextjs.org/) - React framework
 
+- [Next.js](https://nextjs.org/) - React framework
 
 ## About me
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
+- Website - [Portfolio](https://www.mikenjuki.com)
+- Twitter - [@mikenjuki](https://www.twitter.com/mikenjuki)

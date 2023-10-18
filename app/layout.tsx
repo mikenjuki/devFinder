@@ -7,6 +7,7 @@ const space_mono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-space-mono",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {

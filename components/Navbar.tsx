@@ -21,7 +21,7 @@ export function Navbar() {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="/" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Devfinder
               </NavigationMenuLink>
@@ -33,19 +33,14 @@ export function Navbar() {
               <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
+                    <div className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
                       <div>logo</div>
                       {/* <Icons.logo className="h-6 w-6" /> */}
                       <div className="mb-2 mt-4 text-lg font-medium">
                         Devfinder
                       </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Search for github users via the GitHub API.
-                      </p>
-                    </a>
+                      Search for github users via the GitHub API.
+                    </div>
                   </NavigationMenuLink>
                 </li>
                 <ListItem title="Info">

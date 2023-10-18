@@ -49,7 +49,7 @@ p-3
           />
 
           <Button
-            className="col-span-12 lg:col-span-2 w-full bg-devBlue text-pureWhite"
+            className="col-span-12 lg:col-span-2 w-full bg-devBlue hover:text-devBlue text-pureWhite md:px-4"
             type="submit"
             disabled={false}
             size="icon"

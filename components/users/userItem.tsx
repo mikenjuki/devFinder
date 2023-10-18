@@ -1,6 +1,8 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import UserPopup from "./userPopup";
+import Image from "next/image";
+import fallback from "@/public/assets/Oval.svg";
 
 interface User {
   login: string;
@@ -17,11 +19,13 @@ const UserItem = ({ user }: UserItemProps) => {
       {/* image <Image src={avatar_url} alt={`${login}'s avatar`} width={500} height={500} />*/}
       <Avatar>
         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarFallback>
+          <Image src={fallback} alt="fallback" width={40} height={40} />
+        </AvatarFallback>
       </Avatar>
-      <div className="flex-1 space-y-1">
+      <div className="flex-1 space-y-1 group">
         <p className="text-sm font-medium leading-none">{login}</p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground group-hover:text-devBlue">
           <UserPopup />
         </p>
       </div>

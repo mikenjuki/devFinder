@@ -8,6 +8,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+import fallback from "@/public/assets/Oval.svg";
 
 const RepoData = [
   { title: "Repos", number: 8 },
@@ -37,58 +39,65 @@ const AccountLinks = [
 const UserPopup = () => {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <p className="cursor-pointer hover:text-devBlue transition-all">
+      <DialogTrigger asChild className="">
+        <span className="cursor-pointer hover:text-devBlue transition-all">
           See Details
-        </p>
+        </span>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[700px] grid gap-3 p-4 lg:grid-cols-[.25fr_1fr] font-mono font-normal dark:bg-bluishBlack">
-        <Avatar className="">
+
+      <DialogContent className="sm:max-w-[700px] grid gap-3 p-4 grid-cols-[.25fr_1fr] font-mono font-normal dark:bg-bluishBlack items-center">
+        <Avatar className="w-12 h-12 md:w-24 md:h-24">
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>
+            <Image src={fallback} alt="fallback" width={100} height={100} />
+          </AvatarFallback>
         </Avatar>
-        <DialogHeader>
-          <DialogTitle className="flex justify-between pt-6">
+        <DialogHeader className="">
+          <DialogTitle className="flex flex-col md:flex-row justify-between pt-6 text-left">
             Mike Njuki
             <p className="text-[12px] font-normal leading-normal">
               Joined 25 Jan 2011
             </p>
           </DialogTitle>
-          <DialogDescription>@mikenjuki</DialogDescription>
-          <article className="grid gap-4 py-4">
-            <div className="">
-              <p className="dark:text-pureWhite text-[15px] leading-[25px]">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
-                odio. Quisque volutpat mattis eros.
-              </p>
-            </div>
-            {/* <h5 > */}
-            <div className="w-full bg-darkBlack flex justify-around rounded-md py-[15px] ">
-              {RepoData.map((data, i) => {
-                return (
-                  <div key={i}>
-                    <h5 className="text-[13px] leading-normal font-normal">
-                      {data.title}
-                    </h5>
-                    <p className="text-[22px] leading-normal font-[700]">
-                      {data.number}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex flex-wrap gap-6">
-              {AccountLinks.map((item, index) => (
-                <div key={index} className="flex gap-2 md:min-w-[211px]">
-                  <p>{item.icon}</p>
-                  <p className="text-[15px] leading-normal font-normal">
-                    {item.location}
+          <DialogDescription className="text-devBlue text-left">
+            @mikenjuki
+          </DialogDescription>
+        </DialogHeader>
+        <article className="grid gap-4 py-4 col-span-2 md:col-start-2">
+          <div className="">
+            <p className="text-paleBlue dark:text-pureWhite text-[15px] leading-[25px]">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+              odio. Quisque volutpat mattis eros.
+            </p>
+          </div>
+          <div className="w-full bg-offWhite dark:bg-darkBlack flex justify-around rounded-md py-[15px] ">
+            {RepoData.map((data, i) => {
+              return (
+                <div key={i}>
+                  <h5 className="text-[13px] leading-normal font-normal text-paleBlue dark:text-pureWhite">
+                    {data.title}
+                  </h5>
+                  <p className="text-[22px] leading-normal font-[700]">
+                    {data.number}
                   </p>
                 </div>
-              ))}
-            </div>
-          </article>
-        </DialogHeader>
+              );
+            })}
+          </div>
+          <div className="flex flex-wrap gap-6">
+            {AccountLinks.map((item, index) => (
+              <div
+                key={index}
+                className="flex gap-2 md:min-w-[211px] text-paleBlue dark:text-offWhite"
+              >
+                <p>{item.icon}</p>
+                <p className="text-[15px] leading-normal font-normal">
+                  {item.location}
+                </p>
+              </div>
+            ))}
+          </div>
+        </article>
       </DialogContent>
     </Dialog>
   );

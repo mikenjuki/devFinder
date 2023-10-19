@@ -18,7 +18,7 @@ const UserItem = ({ user }: UserItemProps) => {
     <div className="flex items-center space-x-4 rounded-md border p-4 ">
       {/* image <Image src={avatar_url} alt={`${login}'s avatar`} width={500} height={500} />*/}
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src={user.avatar_url} alt={`${user.login}'s avatar`} />
         <AvatarFallback>
           <Image src={fallback} alt="fallback" width={40} height={40} />
         </AvatarFallback>

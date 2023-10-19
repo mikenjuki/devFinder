@@ -10,6 +10,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import fallback from "@/public/assets/Oval.svg";
+import {
+  ovalIcon,
+  companyIcon,
+  locationIcon,
+  twitterIcon,
+  websiteIcon,
+} from "@/public/assets/assets";
 
 const RepoData = [
   { title: "Repos", number: 8 },
@@ -19,20 +26,20 @@ const RepoData = [
 
 const AccountLinks = [
   {
-    icon: "A",
-    location: "San Francisco",
+    icon: locationIcon,
+    title: "San Francisco",
   },
   {
-    icon: "KK",
-    location: "Not Available",
+    icon: twitterIcon,
+    title: "Not Available",
   },
   {
-    icon: "MN",
-    location: "https://github.com",
+    icon: websiteIcon,
+    title: "https://github.com",
   },
   {
-    icon: "i58",
-    location: "@github",
+    icon: companyIcon,
+    title: "@github",
   },
 ];
 
@@ -49,7 +56,7 @@ const UserPopup = () => {
         <Avatar className="w-12 h-12 md:w-24 md:h-24">
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>
-            <Image src={fallback} alt="fallback" width={100} height={100} />
+            <Image src={ovalIcon} alt="fallback" width={100} height={100} />
           </AvatarFallback>
         </Avatar>
         <DialogHeader className="">
@@ -90,9 +97,14 @@ const UserPopup = () => {
                 key={index}
                 className="flex gap-2 md:min-w-[211px] text-paleBlue dark:text-offWhite"
               >
-                <p>{item.icon}</p>
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  width={18}
+                  height={10}
+                />
                 <p className="text-[15px] leading-normal font-normal">
-                  {item.location}
+                  {item.title}
                 </p>
               </div>
             ))}

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchStore } from "@/store/searchStore";
 
 const SearchInput = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -16,16 +17,45 @@ const SearchInput = () => {
       searchterm: "",
     },
   });
+
+  //state to zustand
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("search term 🚀🚀 ->:", values.searchterm);
+    setSearchTerm(values.searchterm);
+
+    try {
+      const response = await fetch(
+        `/api/users?searchterm=${values.searchterm}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Data from custom endpoint:", data);
+      } else {
+        console.error("Failed to fetch data from custom endpoint");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+
+    form.reset();
+  };
   return (
     <section className="w-[60%] px-4 lg:px-32 pt-6">
       <Form {...form}>
         <form
-          //   onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="
         rounded-lg
         border
         w-full
-p-3
+        p-3
         focus-within:shadow-sm
         grid
         grid-cols-12

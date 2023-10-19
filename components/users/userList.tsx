@@ -1,72 +1,53 @@
+"use client";
+
+import { useQuery } from "react-query";
 import UserItem from "./userItem";
-
-interface User {
-  login: string;
-  avatar_url: string;
-  id: number;
-}
-
-const users: User[] = [
-  {
-    id: 1,
-    login: "Mike Njuki ",
-    avatar_url: "",
-  },
-  {
-    id: 2,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 3,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 4,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 5,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 6,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 7,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 8,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 9,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-  {
-    id: 10,
-    login: "Mike Njuki",
-    avatar_url: "",
-  },
-];
+import { useSearchStore } from "@/store/searchStore";
+import Loader from "../Loader";
+import Empty from "../Empty";
 
 const UserList = () => {
-  //   const { users, loading } = useContext(GithubContext);
-  let loading = false;
+  const activeSearchTerm = useSearchStore((state) => state.searchTerm);
+  console.log(
+    "🚀 ~ file: userList.tsx:67 ~ UserList ~ activeSearchTerm:",
+    activeSearchTerm
+  );
 
-  if (!loading) {
-    return (
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["userList"],
+    queryFn: () =>
+      fetch(`/api/users?searchterm=${activeSearchTerm}`).then((res) =>
+        res.json()
+      ),
+  });
+  console.log("👚👚👚 ~ file: userList.tsx:80 ~ UserList ~ data:", data);
+
+  return (
+    <div className="space-y-4 mt-4">
+      {isLoading && (
+        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+          <Loader />
+        </div>
+      )}
+
+      {!data && !isLoading && <Empty label="Give me a user to search for 🤓" />}
+      {data && (
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 font-mono">
+          {data.items.map((user: User) => (
+            <UserItem key={user.id} user={user} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserList;
+
+{
+  /* </div> if (!isLoading) {
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 font-mono">
-        {users.map((user) => (
+        {data.items.map((user) => (
           <UserItem key={user.id} user={user} />
         ))}
       </div>
@@ -74,6 +55,5 @@ const UserList = () => {
   } else {
     return <div>Loading...</div>;
   }
-};
-
-export default UserList;
+   */
+}

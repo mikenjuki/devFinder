@@ -2,31 +2,32 @@
 
 import { useQuery } from "react-query";
 import UserItem from "./userItem";
-import { useSearchStore } from "@/store/searchStore";
-import Loader from "../Loader";
+
 import Empty from "../Empty";
+import { UserItemSkeleton } from "./skeleton";
+import useUserListStore from "@/store/userListStore";
+
+interface UserData {
+  data: [];
+  items: User[];
+  isLoading: boolean;
+}
 
 const UserList = () => {
-  const activeSearchTerm = useSearchStore((state) => state.searchTerm);
-  console.log(
-    "🚀 ~ file: userList.tsx:67 ~ UserList ~ activeSearchTerm:",
-    activeSearchTerm
-  );
+  const { data, isLoading, isFetching } = useQuery<UserData>("userList");
+  console.log("🚀 ~ file: userList.tsx:18 ~ UserList ~ data:", data);
+  const userList = useUserListStore((state) => state.listData);
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["userList"],
-    queryFn: () =>
-      fetch(`/api/users?searchterm=${activeSearchTerm}`).then((res) =>
-        res.json()
-      ),
-  });
-  console.log("👚👚👚 ~ file: userList.tsx:80 ~ UserList ~ data:", data);
+  let skeletonElements = [];
+  for (let i = 0; i < 10; i++) {
+    skeletonElements.push(<UserItemSkeleton key={i} />);
+  }
 
   return (
     <div className="space-y-4 mt-4">
       {isLoading && (
-        <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
-          <Loader />
+        <div className=" w-full flex flex-wrap items-center gap-10">
+          {skeletonElements}
         </div>
       )}
 
@@ -43,17 +44,3 @@ const UserList = () => {
 };
 
 export default UserList;
-
-{
-  /* </div> if (!isLoading) {
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 font-mono">
-        {data.items.map((user) => (
-          <UserItem key={user.id} user={user} />
-        ))}
-      </div>
-    );
-  } else {
-    return <div>Loading...</div>;
-  }
-   */
-}

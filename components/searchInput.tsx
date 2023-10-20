@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import * as z from "zod";
 import { formSchema } from "@/lib/formSchema";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -8,9 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchStore } from "@/store/searchStore";
+import { useQuery } from "react-query";
+
 
 const SearchInput = () => {
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -18,34 +21,25 @@ const SearchInput = () => {
     },
   });
 
-  //state to zustand
-  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+  const { data, isLoading } = useQuery({
+    queryKey: ["userList", ],
+    queryFn: () =>
+      fetch(`/api/users?searchterm=${searchterm}`).then((res) => res.json()),
+    refetchOnWindowFocus: false,
+  });
 
+  console.log(
+    "🚀 ~ file: searchInput.tsx:29 ~ SearchInput ~ data:",
+    data
+  );
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("search term 🚀🚀 ->:", values.searchterm);
-    setSearchTerm(values.searchterm);
-
-    try {
-      const response = await fetch(
-        `/api/users?searchterm=${values.searchterm}`,
-        {
-          method: "GET",
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Data from custom endpoint:", data);
-      } else {
-        console.error("Failed to fetch data from custom endpoint");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    //setTerm(values.searchterm);
 
     form.reset();
   };
+
   return (
     <section className="w-[60%] px-4 lg:px-32 pt-6">
       <Form {...form}>
@@ -81,7 +75,7 @@ const SearchInput = () => {
           <Button
             className="col-span-12 lg:col-span-2 w-full bg-devBlue hover:text-devBlue text-pureWhite md:px-4"
             type="submit"
-            disabled={false}
+            disabled={isLoading}
             size="icon"
           >
             Search

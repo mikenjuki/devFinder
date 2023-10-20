@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SearchInput from "./searchInput";
 import UserList from "./users/userList";
+import { UserItemSkeleton } from "./users/skeleton";
 
 const BodySection = () => {
   return (
@@ -9,7 +10,9 @@ const BodySection = () => {
         <SearchInput />
       </div>
       <div className="px-10">
+      <Suspense  fallback={<UserItemSkeleton />}>
         <UserList />
+        </Suspense>
       </div>
     </section>
   );
